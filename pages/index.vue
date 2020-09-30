@@ -1,13 +1,20 @@
 <template>
   <main class="container">
-    <h1>Hi From Home Page</h1>
+    <AppHeader />
+    <AppRestaurants />
   </main>
 </template>
 
 <script>
-export default {}
+import AppHeader from "@/components/AppHeader.vue";
+import AppRestaurants from "@/components/AppRestaurants.vue";
+
+export default {
+  components: {
+    AppHeader,
+    AppRestaurants
+  }
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
