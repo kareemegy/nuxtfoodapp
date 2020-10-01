@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <h1>Hi From about page!</h1>
-    </div>
+    <footer>
+        <p>Copyright here</p>
+    </footer>
 </template>
 
 <script>
