@@ -8,16 +8,20 @@
         <nuxt-link exact to="/restaurants">Restaurants</nuxt-link>
       </li>
     </ul>
-    <nuxt-link to="/cart">Cart</nuxt-link>
+    <nuxt-link to="/cart">Cart <span v-if="getCounts" class="smallnum">{{getCounts}}</span></nuxt-link>
   </nav>
 </template>
 
 <script>
 import AppLogo from "@/components/AppLogo.vue";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
     AppLogo
+  },
+  computed: {
+    ...mapGetters(["getCounts"])
   }
 };
 </script>

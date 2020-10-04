@@ -100,7 +100,8 @@ export default {
         item: this.currentItem.item,
         options: this.itemOptions,
         addOns: this.itemAddOns,
-        price: this.addPrice(currentPrice)
+        price: this.addPrice(currentPrice),
+        count:this.count
       };
       this.cartSubmtted = true;
       this.$store.commit("addToCart", formOutPut);
