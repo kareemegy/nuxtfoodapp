@@ -12,20 +12,42 @@
           <strong>Price: ${{ currentItem.price }}</strong>
         </p>
         <div>
-          <input v-model="price" type="number" min="1" />
-          <button>Add to Cart -${{ addPrice(currentItem.price) }}</button>
+          <input v-model="count" type="number" min="1" />
+          <button @click="addToCart(currentItem.price)">
+            Add to Cart -${{ addPrice(currentItem.price) }}
+          </button>
         </div>
+
+        <AppToast v-if="cartSubmtted">
+          Order submitted <br />
+          Check out more
+          <nuxt-link to="/restaurants">restaurants</nuxt-link> restaurants!
+        </AppToast>
+
         <fieldset v-if="currentItem.options">
           <legend><h3>Options</h3></legend>
           <div v-for="option in currentItem.options" :key="option.id">
-            <input type="checkbox" name="addOne" :id="option" :value="option" />
+            <input
+              v-model="itemOptions"
+              type="radio"
+              name="addOne"
+              :id="option"
+              :value="option"
+            />
             <label for="addOne">{{ option }}</label>
           </div>
         </fieldset>
-        <fieldset>
+
+        <fieldset v-if="currentItem.addOns">
           <legend><h3>Add Ons</h3></legend>
           <div v-for="addOne in currentItem.addOns" :key="addOne.id">
-            <input type="checkbox" name="addOne" :id="addOne" :value="addOne" />
+            <input
+              v-model="itemAddOns"
+              type="checkbox"
+              name="addOne"
+              :id="addOne"
+              :value="addOne"
+            />
             <label for="addOne">{{ addOne }}</label>
           </div>
         </fieldset>
@@ -36,12 +58,19 @@
 
 <script>
 import { mapState } from "vuex";
+import AppToast from "@/components/AppToast";
 
 export default {
+  components: {
+    AppToast
+  },
   data() {
     return {
       id: this.$route.params.id,
-      price: 1
+      count: 1,
+      itemOptions: "",
+      itemAddOns: [],
+      cartSubmtted: false
     };
   },
   computed: {
@@ -62,9 +91,19 @@ export default {
   },
   methods: {
     addPrice(currentPrice) {
-      return Number(this.price) == 0
-        ? currentPrice
-        : (Number(this.price) * currentPrice).toFixed(2);
+      return Number(this.count) == 0
+        ? Number(currentPrice)
+        : Number((Number(this.count) * Number(currentPrice)).toFixed(2));
+    },
+    addToCart(currentPrice) {
+      let formOutPut = {
+        item: this.currentItem.item,
+        options: this.itemOptions,
+        addOns: this.itemAddOns,
+        price: this.addPrice(currentPrice)
+      };
+      this.cartSubmtted = true;
+      this.$store.commit("addToCart", formOutPut);
     }
   }
 };
@@ -89,6 +128,9 @@ export default {
   width: 400px;
   height: 400px;
 }
+.col-2 {
+  position: relative;
+}
 .col-2 p {
   font-size: 1.2rem;
   margin: 10px 0px 10px 0px;
@@ -106,5 +148,10 @@ fieldset {
 
 fieldset div {
   margin-bottom: 15px;
+}
+.toast {
+  padding: 12px 12px !important;
+  left: 280px !important;
+  right: 0 !important;
 }
 </style>
