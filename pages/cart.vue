@@ -47,7 +47,10 @@
         viewBox="-949 951 100 100"
         style="enable-background:new -949 951 100 100;"
         xml:space="preserve"
+        role="presentation"
+        aria-labelledby="hungry"
       >
+    <title id="hungry">Hungry  man icon</title>
         <g>
           <g i:extraneous="self">
             <g>
@@ -66,7 +69,7 @@
         </g>
       </svg>
       <h3>Your cart is empty!</h3>
-      <button>Fill it up</button>
+      <nuxt-link exact to="/"> <button>Fill it up</button></nuxt-link>
     </div>
   </main>
 </template>
